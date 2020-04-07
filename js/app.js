@@ -76,12 +76,12 @@ class GameOfLife {
    */
   nextGen = () => {
     this.#cells = this.#cells.map((cell, index) => {
-      const neighbourCount = this.calculateNeighbours(index);
+      const neighborCount = this.calculateNeighbors(index);
       let state = cell;
       if (cell == 1) {
-        if (neighbourCount < 2 || neighbourCount > 3) state = 0;
+        if (neighborCount < 2 || neighborCount > 3) state = 0;
       } else {
-        if (neighbourCount === 3) state = 1;
+        if (neighborCount === 3) state = 1;
       }
 
       return state;
@@ -100,49 +100,48 @@ class GameOfLife {
   };
 
   /*
-    We need to calculate count of neighbours for given index.
-    Left and right neighbours are just +- 1 index 
+    We need to calculate count of neighbors for given index.
+    Left and right neighbors are just +- 1 index 
     Up and down: +- height of the field
-    Diagonal neighbours: +- height +- 1
+    Diagonal neighbors: +- height +- 1
     */
-  calculateNeighbours = (index) => {
-    let neighbourCount = 0;
+  calculateNeighbors = (index) => {
+    let neighborCount = 0;
 
-    //check left neighbour
+    //check left neighbor
     const column = ~~(index / this.width);
     const row = index % this.width;
 
-    if (row > 0) this.#cells[+index - 1] ? neighbourCount++ : void 0;
+    if (row > 0) this.#cells[+index - 1] ? neighborCount++ : void 0;
 
-    // check right neighbour
+    // check right neighbor
     if (row < this.width - 1)
-      this.#cells[+index + 1] ? neighbourCount++ : void 0;
+      this.#cells[+index + 1] ? neighborCount++ : void 0;
 
-    // check top neighbour
-    if (column > 0)
-      this.#cells[+index - this.width] ? neighbourCount++ : void 0;
+    // check top neighbor
+    if (column > 0) this.#cells[+index - this.width] ? neighborCount++ : void 0;
 
-    // check bot neighbour
+    // check bot neighbor
     if (column < this.height - 1)
-      this.#cells[+index + this.width] ? neighbourCount++ : void 0;
+      this.#cells[+index + this.width] ? neighborCount++ : void 0;
 
-    // check top left neighbour
+    // check top left neighbor
     if (row > 0 && column > 0)
-      this.#cells[+index - 1 - this.width] ? neighbourCount++ : void 0;
+      this.#cells[+index - 1 - this.width] ? neighborCount++ : void 0;
 
-    // check top right neighbour
+    // check top right neighbor
     if (row < this.width - 1 && column > 0)
-      this.#cells[+index + 1 - this.width] ? neighbourCount++ : void 0;
+      this.#cells[+index + 1 - this.width] ? neighborCount++ : void 0;
 
-    // check bot left neighbour
+    // check bot left neighbor
     if (row > 0 && column < this.height - 1)
-      this.#cells[+index - 1 + this.width] ? neighbourCount++ : void 0;
+      this.#cells[+index - 1 + this.width] ? neighborCount++ : void 0;
 
-    // check bot right neighbour
+    // check bot right neighbor
     if (row < this.width - 1 && column < this.height - 1)
-      this.#cells[+index + 1 + this.width] ? neighbourCount++ : void 0;
+      this.#cells[+index + 1 + this.width] ? neighborCount++ : void 0;
 
-    return neighbourCount;
+    return neighborCount;
   };
 }
 
